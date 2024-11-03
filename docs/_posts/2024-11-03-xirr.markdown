@@ -5,9 +5,9 @@ date:   2024-11-03 15:30:00 +0530
 categories: investing
 ---
 
-XIRR is often treated as the be-all and end-all [metric](https://zerodha.com/varsity/chapter/measuring-mutual-fund-returns) for quantifying an investment's performance. I used to plug this metric all the time to compare the performance of MFs I had invested in. I took it for granted by treating as a black-box for years.
+XIRR is often treated as the be-all and end-all [metric](https://zerodha.com/varsity/chapter/measuring-mutual-fund-returns) for quantifying an investment's performance. I used to utilize this metric all the time to compare the performance of MFs I had invested in. I took it for granted by treating it as a black-box for years.
 
-One fine day I decided to check its concrete [definition](https://www.indiainvestments.wiki/excel/quantifying-returns-cagr-and-xirr/xirr-math#definition-of-xirr).
+One fine day, I decided to check its concrete [definition](https://www.indiainvestments.wiki/excel/quantifying-returns-cagr-and-xirr/xirr-math#definition-of-xirr).
 
 > XIRR of a given cashflow time-series data, is defined as value of r, the rate of discounting, such that NPV is 0.
 
@@ -19,7 +19,7 @@ Ignorance was truly a bliss. I relied on it quite a lot and not having an intuit
 
 If something is so ubiquitous, it can't be hard to understand. I resorted to searching on YouTube, Google, etc, to find out what does XIRR _really_ represent. Most sources simply plugged in the Excel [function](https://support.microsoft.com/en-us/office/xirr-function-de1242ec-6477-445b-b11b-a303ad9adc9d) and others quoted jargon like discounting, cashflow decay, etc.
 
-Luckily, I could derive XIRR using nothing but first principles. I didn't find any source explaining the intuition so here is one :)
+Luckily, I could derive XIRR using nothing but first principles. I didn't find any source explaining the intuition, so here is one :)
 
 ---
 <br>
@@ -35,7 +35,7 @@ Alice's investment increased by 25% and Bob's by 50%.
 
 This might make Bob look like Buffet but we forgot to account for one thing - time.
 
-Suppose it took Bob 2 years to get 50% return and it tool Alice 1 year to get 25% return, how do we evaluate their portfolio performance?
+Suppose it took Bob 2 years to get 50% return and it took Alice 1 year to get 25% return, how do we evaluate their portfolio performance?
 
 [Compound interest](https://en.wikipedia.org/wiki/Compound_interest) enters the room.
 
@@ -49,7 +49,7 @@ So, Alice had the upper hand. This "hypothetical compound interest rate" is term
 
 Now, we enter the realm of XIRR/IRR[^1].
 
-Suppose, today were 2022-01-01. The assumption that Alice's investment went from ₹200 to ₹250 in 1 year and Bob's investment went from ₹100 to ₹150 in 2 years, is intact. Assume that the investing timeline was as follows.
+Suppose, today were 2022-01-01. The assumption that Alice's investment went from ₹200 to ₹250 in 1 year and Bob's investment went from ₹100 to ₹150 in 2 years, is intact. Assume that the investing timeline were as follows.
 
 | Person | Date       | Amount invested |
 | ------ | ---------- | --------------- |
