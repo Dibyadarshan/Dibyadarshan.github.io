@@ -1,0 +1,90 @@
+---
+layout: post
+title:  "XIRR intuition"
+date:   2024-11-03 15:30:00 +0530
+categories: investing
+---
+
+XIRR is often treated as the be-all and end-all [metric](https://zerodha.com/varsity/chapter/measuring-mutual-fund-returns) for quantifying an investment's performance. I used to plug this metric all the time to compare the performance of MFs I had invested in. I took it for granted by treating as a black-box for years.
+
+One fine day I decided to check its concrete [definition](https://www.indiainvestments.wiki/excel/quantifying-returns-cagr-and-xirr/xirr-math#definition-of-xirr).
+
+> XIRR of a given cashflow time-series data, is defined as value of r, the rate of discounting, such that NPV is 0.
+
+The formula for NPV was quite abstruse.
+
+$NPV = \sum_{i = 0}^{n - 1} \frac{P_{i}}{(1 + r)^{\frac{t_{i} - t_{0}}{\Delta T}}}$
+
+Ignorance was truly a bliss. I relied on it quite a lot and not having an intuition made me a bit uncomfortable.
+
+If something is so ubiquitous, it can't be hard to understand. I resorted to searching on YouTube, Google, etc, to find out what does XIRR _really_ represent. Most sources simply plugged in the Excel [function](https://support.microsoft.com/en-us/office/xirr-function-de1242ec-6477-445b-b11b-a303ad9adc9d) and others quoted jargon like discounting, cashflow decay, etc.
+
+Luckily, I could derive XIRR using nothing but first principles. I didn't find any source explaining the intuition so here is one :)
+
+---
+<br>
+Alice invested ₹100 and today its value is ₹180. Bob invested ₹100 and today its value is ₹150.
+
+Since $80 > 50$, Alice's portfolio performed better. 
+
+Now suppose, Alice invested ₹200 and today its value is ₹250. Bob invested ₹100 and today its value is ₹150.
+
+Who did it better?
+
+Alice's investment increased by 25% and Bob's by 50%.
+
+This might make Bob look like Buffet but we forgot to account for one thing - time.
+
+Suppose it took Bob 2 years to get 50% return and it tool Alice 1 year to get 25% return, how do we evaluate their portfolio performance?
+
+[Compound interest](https://en.wikipedia.org/wiki/Compound_interest) enters the room.
+
+Suppose both of their investments were compounding using a hypothetical rate, we could simply compare this rate.
+
+$250 = 200 * (1 + \frac{r_{alice}}{100}) ^ {1} \implies r_{alice} = 25\%$
+
+$150 = 100 * (1 + \frac{r_{bob}}{100}) ^ {2} \implies r_{bob} = 22.47\%$
+
+So, Alice had the upper hand. This "hypothetical compound interest rate" is termed as CAGR.
+
+Now, we enter the realm of XIRR/IRR[^1].
+
+Suppose, today were 2022-01-01. The assumption that Alice's investment went from ₹200 to ₹250 in 1 year and Bob's investment went from ₹100 to ₹150 in 2 years, is intact. Assume that the investing timeline was as follows.
+
+| Person | Date       | Amount invested |
+| ------ | ---------- | --------------- |
+| Bob    | 2020-01-01 | ₹10             |
+| Bob    | 2021-06-01 | ₹90             |
+| Alice  | 2021-01-01 | ₹190            |
+| Alice  | 2021-06-01 | ₹10             |
+
+Again, let's assume for each person, there exists a "hypothetical compound interest rate".
+
+For Alice, ₹190 was invested for 1 year and ₹10 for half a year.
+
+$250 = 190 * (1 + \frac{r_{alice}}{100}) ^ {1} + 10 * (1 + \frac{r_{alice}}{100}) ^ {0.5}$
+
+$\implies r_{alice} = 25.59\%$
+
+For Bob, ₹10 was invested for 2 years and ₹90 for half a year.
+
+$150 = 10 * (1 + \frac{r_{bob}}{100}) ^ {2} + 90 * (1 + \frac{r_{bob}}{100}) ^ {0.5}$
+
+$\implies r_{bob} = 74.99\%$
+
+Bob is the ultimate champion!
+
+This "hypothetical compound interest rate" is XIRR. This computation that we did, if you rearrange the terms, we get the scary NPV formula. Would you look at that!
+
+In short, XIRR is the "hypothetical compound interest rate" at which your portfolio grows. This accounts for random amounts invested at random time intervals. 
+
+<br>
+<br>
+
+---
+
+<br>
+Got feedback? Feel free to drop it [here](https://github.com/Dibyadarshan/dibyadarshan.github.io/issues), thanks!
+
+[^1]: IRR is a subset of XIRR. IRR is used for recurring, periodic investments of equal amount. XIRR is generalized and hence more popular.
+
